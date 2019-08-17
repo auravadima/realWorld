@@ -1,0 +1,27 @@
+version: "3.3"
+services:
+  front:
+    build: ./front
+    image: front
+    network_mode: host
+    volumes:
+      - ./front/build:/usr/share/nginx/html
+    ports:
+      - 80:80
+    depends_on:
+      - back
+  back:
+    build: ./back
+    image: back
+    network_mode: host
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    network_mode: host
+    volumes:
+      - /data/db:/data/db
+    ports:
+      - 27017:27017
