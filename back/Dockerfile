@@ -1,6 +1,6 @@
 FROM node:alpine
 WORKDIR /app
 COPY / /app
-
+EXPOSE 3000
 RUN npm install
-CMD npm run dev
+CMD sleep 15 && npm run dev

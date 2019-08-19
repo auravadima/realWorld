@@ -1,9 +1,8 @@
-version: "3.3"
+version: "3.2"
 services:
   front:
     build: ./front
     image: front
-    network_mode: host
     volumes:
       - ./front/build:/usr/share/nginx/html
     ports:
@@ -13,15 +12,21 @@ services:
   back:
     build: ./back
     image: back
-    network_mode: host
+    networks:
+      - backnet
     ports:
       - 3000:3000
     depends_on:
       - mongo
   mongo:
     image: mongo
-    network_mode: host
+    networks:
+      - backnet
     volumes:
-      - /data/db:/data/db
+      - ./data/db:/data/db
     ports:
       - 27017:27017
+
+networks:
+  backnet:
+    driver: bridge
